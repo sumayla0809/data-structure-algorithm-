@@ -1,0 +1,19 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int singlenumber(vector<int> arr, int n)
+{
+    int ans = 0;
+    for (int val : arr)
+    {
+        ans = ans ^ val;
+    }
+    return ans;
+}
+int main()
+{
+    vector<int> arr = {4, 1, 2, 1, 2};
+    int n = 5;
+    cout << "the single number is " << singlenumber(arr, n);
+    return 0;
+}
