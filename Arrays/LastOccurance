@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int firstOcuur(vector<int> arr, int k)
+{
+    int s = 0;
+    int e = arr.size() - 1;
+    int ans = -1;
+    while (s <= e)
+    {
+        int mid = s + (e - s) / 2;
+        if (arr[mid] == k)
+        {
+            ans = mid;
+            e = mid - 1;
+        }
+        else if (k > arr[mid])
+        {
+            s = mid + 1;
+        }
+        else
+        {
+            e = mid - 1;
+        }
+    }
+
+    return ans;
+}
+int LastOcuur(vector<int> arr, int k)
+{
+    int s = 0;
+    int e = arr.size() - 1;
+    int ans = -1;
+    while (s <= e)
+    {
+        int mid = s + (e - s) / 2;
+        if (arr[mid] == k)
+        {
+            ans = mid;
+            s = mid + 1;
+        }
+        else if (k > arr[mid])
+        {
+            s = mid + 1;
+        }
+        else
+        {
+            e = mid - 1;
+        }
+    }
+
+    return ans;
+}
+pair<int, int> findfirstandlast(vector<int> arr, int k)
+{
+    pair<int, int> p;
+    p.first = firstOcuur(arr, k);
+    p.second = LastOcuur(arr, k);
+
+    return p;
+}
+int main()
+{
+    vector<int> arr = {1, 2, 3, 3, 4};
+    int k = 3;
+    pair<int, int> result = findfirstandlast(arr, k);
+    cout << "first occrance is " << result.first << endl;
+    cout << "Last occrance is " << result.second << endl;
+    return 0;
+}
