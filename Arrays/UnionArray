@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+bool ispresent(int arr[], int size, int val)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (arr[i] == val)
+            return true;
+    }
+    return false;
+}
+int Union(int arr1[], int n, int arr2[], int m)
+
+{
+    int ans[1000];
+    int size = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!ispresent(ans, size, arr1[i]))
+        {
+            ans[size] = arr1[i];
+            size++;
+        }
+    }
+    for (int j = 0; j < n; j++)
+    {
+        if (!ispresent(ans, size, arr2[j]))
+        {
+            ans[size] = arr2[j];
+            size++;
+        }
+    }
+    return size;
+}
+
+int main()
+{
+    int arr1[] = {1, 2, 3, 4};
+    int n = 4;
+    int arr2[] = {5, 6, 7, 8};
+    int m = 4;
+    cout << "the sie is " << Union(arr1, n, arr2, m);
+    return 0;
+}
