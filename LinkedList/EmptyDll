@@ -1,0 +1,131 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *prev;
+    Node *next;
+
+    // Constructor
+    Node(int d)
+    {
+        this->data = d;
+        this->prev = NULL;
+        this->next = NULL;
+    }
+};
+
+void print(Node *&head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+void insertAtHead(Node *&head, Node *&tail, int d)
+{
+    if (head == NULL)
+    {
+        Node *temp = new Node(d);
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        Node *temp = new Node(d);
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+}
+
+void insertAtTail(Node *&tail, Node *&head, int d)
+{
+    if (tail == NULL)
+    {
+        Node *temp = new Node(d);
+        tail = temp;
+        head = temp;
+    }
+    else
+    {
+        Node *temp = new Node(d);
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
+}
+
+void insertAtPosition(Node *&head, Node *&tail, int position, int d)
+{
+    // Agar list empty hai aur position 1 hai
+    if (head == NULL && position == 1)
+    {
+        Node *temp = new Node(d);
+        head = temp;
+        tail = temp;
+        return;
+    }
+
+    // Agar position 1 hai to head me insert karo
+    if (position == 1)
+    {
+        insertAtHead(head, tail, d);
+        return;
+    }
+
+    Node *temp = head;
+    int cnt = 1;
+
+    // Position - 1 tak traverse karo
+    while (cnt < position - 1 && temp != NULL)
+    {
+        temp = temp->next;
+        cnt++;
+    }
+
+    // Agar hum list ke end tak pahunch gaye ya position end ke barabar hai to tail par insert karo
+    if (temp == NULL || temp->next == NULL)
+    {
+        insertAtTail(tail, head, d);
+        return;
+    }
+
+    // Beech me insert karna hai
+    Node *nodetoinsert = new Node(d);
+    nodetoinsert->next = temp->next;
+    temp->next->prev = nodetoinsert;
+    temp->next = nodetoinsert;
+    nodetoinsert->prev = temp;
+}
+
+int main()
+{
+    Node *head = NULL;
+    Node *tail = NULL;
+
+    print(head);
+
+    insertAtHead(head, tail, 5);
+    print(head);
+
+    insertAtHead(head, tail, 1);
+    print(head);
+
+    insertAtTail(tail, head, 15);
+    print(head);
+
+    insertAtTail(tail, head, 20);
+    print(head);
+
+    insertAtPosition(head, tail, 3, 8);
+    print(head);
+
+    return 0;
+}
