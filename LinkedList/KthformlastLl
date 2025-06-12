@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+class Node
+{
+public:
+    int data;
+    Node *next;
+
+    // constructor
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+int kthpostion(Node *&head, int k)
+{
+    // step 1 count likedlist
+    int cnt = 0;
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        temp = temp->next;
+        cnt++;
+    }
+    // step 2 return-1 if dosent exict
+    if (cnt < k)
+    {
+        return -1;
+    }
+    // step 3  move to cnt - k +1 kth nodes
+    temp = head;
+    for (int i = 1; i < cnt - k + 1; i++)
+    {
+        temp = temp->next;
+    }
+    return temp->data;
+}
+
+int main()
+{
+    Node *node1 = new Node(10);
+    Node *node2 = new Node(20);
+    Node *node3 = new Node(30);
+    Node *node4 = new Node(40);
+    Node *node5 = new Node(50);
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    node4->next = node5;
+    int k = 2;
+    cout << " kth postion is " << kthpostion(node1, 2) << endl;
+
+    return 0;
+}
