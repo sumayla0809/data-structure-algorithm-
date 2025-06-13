@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+class Node
+{
+public:
+    int data;
+    Node *next;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+Node *floyeddetecttloop(Node *&head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+    Node *slow = head;
+    Node *fast = head;
+    while (slow != NULL && fast != NULL)
+    {
+        fast = fast->next;
+        if (fast == NULL || fast->next == NULL)
+        {
+            return NULL;
+            fast = fast->next;
+        }
+        slow = slow->next;
+        if (slow == fast)
+        {
+            cout << " cyclye is present at " << slow->data << endl;
+            return slow;
+        }
+    }
+    return NULL;
+}
+Node *getstaringnode(Node *&head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    Node *intersection = floyeddetecttloop(head);
+    Node *slow = head;
+    while (slow != intersection)
+    {
+        slow = slow->next;
+        intersection = intersection->next;
+    }
+    return slow;
+}
+int main()
+{
+    Node *node1 = new Node(10);
+    Node *node2 = new Node(20);
+    Node *node3 = new Node(30);
+    Node *node4 = new Node(40);
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    node4->next = node2;
+    Node *startNode = getstaringnode(node1);
+    if (startNode != NULL)
+    {
+        cout << "Cycle starts at node with data: " << startNode->data << endl;
+    }
+    else
+    {
+        cout << "No cycle detected." << endl;
+    }
+
+    return 0;
+}
