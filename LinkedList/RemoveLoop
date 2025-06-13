@@ -1,0 +1,126 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+// Detects loop using Floyd's Cycle Detection Algorithm
+Node *floyeddetecttloop(Node *&head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+        {
+            cout << "Cycle is present at node with value: " << slow->data << endl;
+            return slow;
+        }
+    }
+    return NULL;
+}
+
+// Finds the starting node of the loop
+Node *getstaringnode(Node *&head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    Node *intersection = floyeddetecttloop(head);
+    if (intersection == NULL)
+        return NULL;
+
+    Node *slow = head;
+    while (slow != intersection)
+    {
+        slow = slow->next;
+        intersection = intersection->next;
+    }
+    return slow;
+}
+
+// Removes the loop from the linked list
+void removeLoop(Node *&head)
+{
+    if (head == NULL)
+        return;
+
+    Node *startofloop = getstaringnode(head);
+    if (startofloop == NULL)
+        return;
+
+    Node *temp = startofloop;
+    while (temp->next != startofloop)
+    {
+        temp = temp->next;
+    }
+    temp->next = NULL;
+}
+
+// Prints the list
+void printList(Node *head)
+{
+    while (head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+// MAIN FUNCTION
+int main()
+{
+    // Creating nodes
+    Node *head = new Node(1);
+    Node *second = new Node(2);
+    Node *third = new Node(3);
+    Node *fourth = new Node(4);
+    Node *fifth = new Node(5);
+
+    // Linking nodes
+    head->next = second;
+    second->next = third;
+    third->next = fourth;
+    fourth->next = fifth;
+
+    // Creating a loop (fifth -> second)
+    fifth->next = second;
+
+    // Detect and remove loop
+    if (floyeddetecttloop(head) != NULL)
+    {
+        cout << "Loop detected.\n";
+        removeLoop(head);
+        cout << "Loop removed.\n";
+    }
+    else
+    {
+        cout << "No loop detected.\n";
+    }
+
+    // Print the list
+    cout << "Linked List after loop removal: ";
+    printList(head);
+
+    return 0;
+}
