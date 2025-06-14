@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+int remeoveelement(int arr[], int val, int n)
+{
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] != val)
+        {
+            arr[count] = arr[i];
+            count++;
+        }
+    }
+
+    cout << "Updated array: ";
+    for (int i = 0; i < count; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return count;
+}
+int main()
+{
+    int arr[] = {3, 2, 2, 3};
+    int n = 4;
+    int val = 3;
+    cout << "count is " << remeoveelement(arr, val, n) << endl;
+    return 0;
+}
