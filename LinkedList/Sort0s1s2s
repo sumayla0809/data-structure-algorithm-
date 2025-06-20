@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+class Node
+{
+public:
+    int data;
+    Node *prev;
+    Node *next;
+    // constructor
+    Node(int d)
+    {
+        this->data = d;
+        this->prev = NULL;
+        this->next = NULL;
+    }
+};
+void insertAtTail(Node *&tail, Node *curr)
+{
+    tail->next = curr;
+    tail = curr;
+}
+Node *sortList(Node *&head)
+{
+    Node *zeroHead = new Node(-1);
+    Node *zerotail = zeroHead;
+    Node *oneHead = new Node(-1);
+    Node *onetail = oneHead;
+    Node *twoHead = new Node(-1);
+    Node *twotail = twoHead;
+    Node *curr = head;
+    //  create seprate list 0s 1s 2s
+    while (curr != NULL)
+    {
+        int value = curr->data;
+        if (value == 0)
+        {
+            insertAtTail(zerotail, curr);
+        }
+        else if (value == 1)
+        {
+            insertAtTail(onetail, curr);
+        }
+        else if (value == 2)
+        {
+            insertAtTail(twotail, curr);
+        }
+        curr = curr->next;
+    }
+    // merge 3 sublist
+    //  1s list is not empty
+    if (oneHead->next != NULL)
+    {
+        zerotail->next = oneHead->next;
+    }
+    else
+    {
+        // 1s list -> empty
+        zerotail->next = twoHead->next;
+    }
+    onetail->next = twoHead->next;
+    twotail->next = NULL;
+    /// setup head
+    head = zeroHead->next;
+    // delete dummy head
+    delete zeroHead;
+    delete oneHead;
+    delete twoHead;
+    return head;
+}
+void print(Node *&head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+int main()
+{
+    
+    Node *node1 = new Node(0);
+    Node *node2 = new Node(2);
+    Node *node3 = new Node(1);
+    Node *node4 = new Node(0);
+    Node *node5 = new Node(1);
+    // create links
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    node4->next = node5;
+    sortList(node1);
+    print(node1);
+    return 0;
+}
