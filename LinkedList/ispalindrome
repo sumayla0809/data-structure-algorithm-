@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+class Node
+{
+public:
+    int data;
+    Node *next;
+    // constructor
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+bool checkpalindrome(vector<int> arr)
+{
+    int n = arr.size();
+    int s = 0;
+    int e = n - 1;
+    while (s <= e)
+    {
+        if (arr[s] != arr[e])
+        {
+            return false;
+        }
+        s++;
+        e--;
+    }
+    return true;
+}
+bool ispalindrome(Node *&head)
+{
+    vector<int> arr;
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        arr.push_back(temp->data);
+        temp = temp->next;
+    }
+    return checkpalindrome(arr);
+}
+int main()
+{
+    Node *node1 = new Node(1);
+    Node *node2 = new Node(2);
+    Node *node3 = new Node(3);
+    Node *node4 = new Node(3);
+    Node *node5 = new Node(5);
+    Node *node6 = new Node(1);
+
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    node4->next = node5;
+    node5->next = node6;
+    cout << " is palidrome ?" << ispalindrome(node1) << endl;
+    return 0;
+}
