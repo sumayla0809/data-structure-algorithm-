@@ -1,0 +1,84 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+class Node
+{
+public:
+    int data;
+    Node *next;
+    // constructor
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+Node *getmiddle(Node *head)
+{
+    Node *slow = head;
+    Node *fast = head->next;
+    while (fast != NULL && fast->next != NULL)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    return slow;
+}
+Node *reverse(Node *head)
+{
+    Node *curr = head;
+    Node *prev = NULL;
+    Node *next = NULL;
+    while (curr != NULL)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+bool ispalindrome(Node *head)
+{
+    if (head->next == NULL)
+    {
+        return true;
+    }
+    // step 1 find middle;
+    Node *midle = getmiddle(head);
+    // step 2 reverse linked list after middle
+    Node *temp = midle->next;
+    midle->next = reverse(temp);
+    // step 3 compare bothes half
+    Node *head1 = head;
+    Node *head2 = midle->next;
+    while (head2 != NULL)
+    {
+        if (head1->data != head2->data)
+        {
+            return false;
+        }
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+    return true;
+    // repeat step 2
+    temp = midle->next;
+    midle->next = reverse(temp);
+}
+int main()
+{
+    Node *node1 = new Node(1);
+    Node *node2 = new Node(2);
+    Node *node3 = new Node(3);
+    Node *node4 = new Node(3);
+    Node *node5 = new Node(2);
+    Node *node6 = new Node(1);
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    node4->next = node5;
+    node5->next = node6;
+    cout << " is palindrome ?" << ispalindrome(node1) << endl;
+    return 0;
+}
