@@ -1,0 +1,141 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next = NULL;
+
+    Node(int data)
+    {
+        this->data = data;
+    }
+
+    ~Node()
+    {
+        int value = this->data;
+        if (this->next != NULL)
+        {
+            delete next;
+            this->next = NULL;
+        }
+        cout << "Memory is free for node with data " << value << endl;
+    }
+};
+
+Node *reverse(Node *head)
+{
+    Node *curr = head;
+    Node *prev = NULL;
+    Node *next = NULL;
+    while (curr != NULL)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+
+void insertAtTail(Node *&head, Node *&tail, int val)
+{
+    Node *temp = new Node(val);
+    if (head == NULL)
+    {
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        tail->next = temp;
+        tail = temp;
+    }
+}
+
+Node *add(Node *first, Node *second)
+{
+    int carry = 0;
+    Node *anshead = NULL;
+    Node *anstail = NULL;
+
+    while (first != NULL && second != NULL)
+    {
+        int sum = carry + first->data + second->data;
+        int digit = sum % 10;
+        insertAtTail(anshead, anstail, digit);
+        carry = sum / 10;
+        first = first->next;
+        second = second->next;
+    }
+
+    while (first != NULL)
+    {
+        int sum = carry + first->data;
+        int digit = sum % 10;
+        insertAtTail(anshead, anstail, digit);
+        carry = sum / 10;
+        first = first->next;
+    }
+
+    while (second != NULL)
+    {
+        int sum = carry + second->data;
+        int digit = sum % 10;
+        insertAtTail(anshead, anstail, digit);
+        carry = sum / 10;
+        second = second->next;
+    }
+
+    while (carry != 0)
+    {
+        int digit = carry % 10;
+        insertAtTail(anshead, anstail, digit);
+        carry = carry / 10;
+    }
+
+    return anshead;
+}
+
+Node *addTwolist(Node *first, Node *second)
+{
+    first = reverse(first);
+    second = reverse(second);
+    Node *ans = add(first, second);
+    ans = reverse(ans);
+    return ans;
+}
+
+int main()
+{
+    // First number: 342 (stored as 2->4->3)
+    Node *first = new Node(2);
+    Node *firstTail = first;
+    insertAtTail(first, firstTail, 4);
+    insertAtTail(first, firstTail, 3);
+
+    // Second number: 465 (stored as 5->6->4)
+    Node *second = new Node(5);
+    Node *secondTail = second;
+    insertAtTail(second, secondTail, 6);
+    insertAtTail(second, secondTail, 4);
+
+    // Adding the two linked lists
+    Node *result = addTwolist(first, second);
+
+    // Print the result
+    cout << "Resultant Linked List: ";
+    Node *temp = result;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+
+    // Free memory
+    delete result;
+
+    return 0;
+}
