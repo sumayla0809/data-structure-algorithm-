@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+char tolowercase(char ch)
+{
+    if (ch >= 'a' && ch <= 'z')
+    {
+        return ch;
+    }
+    else
+    {
+        char temp = ch - 'A' + 'a';
+        return temp;
+    }
+}
+bool checkpalindrome(char arr[], int n)
+{
+    int s = 0;
+    int e = n - 1;
+    while (s <= e)
+    {
+        if (tolowercase(arr[s]) != tolowercase(arr[e]))
+        {
+            return false;
+        }
+        else
+        {
+            s++;
+            e--;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    char arr[] = "abcba";
+    int n = 5;
+    cout << "  check palindrome or not  ? " << checkpalindrome(arr, n);
+    return 0;
+}
