@@ -1,0 +1,86 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+class Node{
+    public :
+    int data;
+    Node *next;
+    // connstructor 
+    Node(int data ){
+        this->data = data;
+        this->next = NULL;
+    }
+};
+class Stack{
+    private :
+    Node* top;
+    public : 
+    Stack() {
+        top = nullptr;
+    }
+    // insert at the top element 
+    void push(int val){
+        Node *newnode = new Node(val);
+        newnode->next = top;
+        top = newnode;
+    }
+    void pop(){
+        if (top == nullptr){
+            cout << " stack underflow " << endl;
+            return;
+        }
+        Node *temp = top;
+        top = top->next;
+        delete temp;
+    }
+    int peek()
+    {
+        if (top == nullptr)
+        {
+            cout << "Stack is empty!" << endl;
+            return -1;
+        }
+        return top->data;
+    }
+
+    // isEmpty operation
+    bool isEmpty()
+    {
+        return top == nullptr;
+    }
+
+    // Destructor (to delete all nodes)
+    ~Stack()
+    {
+        while (!isEmpty())
+        {
+            pop();
+        }
+    }
+};
+
+// Main function to test the stack
+int main()
+{
+    Stack s;
+
+    s.push(10);
+    s.push(20);
+    s.push(30);
+
+    cout << "Top element: " << s.peek() << endl;
+
+    s.pop();
+    cout << "Top after pop: " << s.peek() << endl;
+
+    s.pop();
+    s.pop();
+    s.pop(); // Will show underflow
+
+    if (s.isEmpty())
+    {
+        cout << "Stack is empty now!" << endl;
+    }
+
+    return 0;
+}
