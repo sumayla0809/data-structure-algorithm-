@@ -1,0 +1,42 @@
+#include <iostream>
+#include<stack>
+using namespace std;
+
+void solve(stack<int> &s, int x)
+{
+    // base case
+    if (s.empty())
+    {
+        s.push(x);
+        return;
+    }
+    int num = s.top();
+    s.pop();
+
+    // recursie call
+    solve(s, x);
+    s.push(num);
+}
+stack<int> pushAtBottom(stack<int> &myStack, int x)
+{
+    solve(myStack, x);
+    return myStack;
+}
+int main (){
+    stack<int> s;
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.push(4);
+    s.push(5);
+    int x = 6;
+    stack<int> updatedStack = pushAtBottom(s, x);
+
+    cout << "Updated stack is (top to bottom): ";
+    while (!updatedStack.empty())
+    {
+        cout << updatedStack.top() << " ";
+        updatedStack.pop();
+    }
+    return 0;
+}
