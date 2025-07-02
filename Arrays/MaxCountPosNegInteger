@@ -1,0 +1,20 @@
+MAXIMUM COUNT OF POSITIVE NEGITIVE  INTEGER 
+Given an array nums sorted in non-decreasing order, return the maximum between the number of positive integers and the number of negative integers.
+
+class Solution {
+public:
+    int maximumCount(vector<int>& nums) {
+        int maxCount = INT_MIN;
+            int posCount = 0 , negCount = 0;
+        for(int i = 0 ; i < nums.size();i++){
+            if(nums[i] < 0){
+                negCount++;
+            }
+            else if (nums[i] > 0){
+                posCount++;
+            }
+        }
+        maxCount =  max(posCount , negCount);
+        return maxCount;
+    }
+};
