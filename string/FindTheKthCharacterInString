@@ -1,0 +1,23 @@
+class Solution {
+     string getNext(string word){
+        string next = "";
+        for (char ch : word){
+            if (ch == 'z'){
+                next+='a';
+            }
+            else{
+                next += (ch+1);
+            }
+
+        }
+        return word + next;
+     }
+public:
+    char kthCharacter(int k) {
+        string word = "a";
+        while (word.length() < k){
+word = getNext(word);
+        }
+        return word[k-1];
+    }
+};
