@@ -1,0 +1,103 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+class Queue
+{
+    int *arr;
+    int frontIndex;
+    int rear;
+    int size;
+
+public:
+    Queue()
+    {
+        size = 10001;
+        arr = new int[size];
+        frontIndex = 0;
+        rear = 0;
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty()
+    {
+        if (frontIndex == rear)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    void enqueue(int data)
+    {
+        if (rear == size)
+        {
+            return;
+        }
+        else
+        {
+            arr[rear] = data;
+            rear++;
+        }
+    }
+
+    int dequeue()
+    {
+        if (frontIndex == rear)
+        {
+            return -1;
+        }
+        else
+        {
+            int ans = arr[frontIndex];
+            arr[frontIndex] = -1;
+            frontIndex++;
+            if (frontIndex == rear)
+            {
+                frontIndex = 0;
+                rear = 0;
+            }
+            return ans;
+        }
+    }
+
+    int front()
+    {
+        if (frontIndex == rear)
+        {
+            return -1;
+        }
+        else
+        {
+            return arr[frontIndex];
+        }
+    }
+};
+int main()
+{
+    Queue q;
+
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+
+    cout << "Front element: " << q.front() << endl;
+
+    cout << "Dequeued: " << q.dequeue() << endl;
+    cout << "Front element after dequeue: " << q.front() << endl;
+
+    q.enqueue(40);
+    q.enqueue(50);
+
+    while (!q.isEmpty())
+    {
+        cout << "Dequeued: " << q.dequeue() << endl;
+    }
+    cout << "Is queue empty? " << (q.isEmpty() ? "Yes" : "No") << endl;
+
+    return 0;
+}
