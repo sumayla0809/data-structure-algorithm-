@@ -1,0 +1,54 @@
+#include <iostream>
+#include <stack>
+#include <queue>
+using namespace std;
+queue<int> reverseFirstK(queue<int> q, int k)
+{
+    // algo
+    // step1 : pop first k from q put into stack
+    stack<int> s;
+    for (int i = 0; i < k && !q.empty(); i++)
+    {
+        s.push(q.front());
+        q.pop();
+    }
+    // step 2 : fetch from stack and push into q
+    while (!s.empty())
+    {
+        q.push(s.top());
+        s.pop();
+    }
+    // step 3 : fetch first (n-k) elemnt fromt q  and push back
+    int n = q.size();
+    int t = n - k;
+
+    while (t--)
+    {
+        q.push(q.front());
+        q.pop();
+    }
+    return q;
+}
+int main()
+{
+    queue<int> q;
+
+    // Proper way to push elements into the queue
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    q.push(5);
+    int k = 2;
+
+    queue<int> result = reverseFirstK(q, k);
+
+    // Print reversed queue
+    while (!result.empty())
+    {
+        cout << result.front() << " ";
+        result.pop();
+    }
+
+    return 0;
+}
