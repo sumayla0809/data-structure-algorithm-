@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+class node
+{
+public:
+    int data;
+    node *left;
+    node *right;
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+int sumOfAllNodes(node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    int left = sumOfAllNodes(root->left);
+    int right = sumOfAllNodes(root->right);
+    int sumTree = root->data + left + right;
+    return sumTree;
+}
+int main()
+{
+    node *root = new node(1);
+    root->left = new node(2);
+    root->right = new node(3);
+    cout << "sum of the all nodes " << sumOfAllNodes(root) << endl;
+    return 0;
+}
