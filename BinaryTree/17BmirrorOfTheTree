@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+class node
+{
+public:
+    int data;
+    node *left;
+    node *right;
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+void mirror(node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    mirror(root->left);
+    mirror(root->right);
+    swap(root->left, root->right);
+}
+void print(node *root)
+{
+    if (root == NULL)
+        return;
+    cout << root->data << " ";
+    print(root->left);
+    print(root->right);
+}
+
+int main()
+{
+    node *root = new node(1);
+    root->left = new node(2);
+    root->right = new node(3);
+
+    mirror(root); // mirror the tree
+
+    print(root); // print tree after mirror
+
+    return 0;
+}
