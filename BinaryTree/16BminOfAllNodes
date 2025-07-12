@@ -1,0 +1,34 @@
+#include <iostream>
+#include<climits>
+using namespace std;
+class node
+{
+public:
+    int data;
+    node *left;
+    node *right;
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+int minofAllNodes(node *root)
+{
+    if (root == NULL)
+    {
+        return INT_MAX;
+    }
+    int leftMin = minofAllNodes(root->left);
+    int rightMin = minofAllNodes(root->right);
+    return min(root->data, min(leftMin, rightMin));
+}
+int main()
+{
+    node *root = new node(1);
+    root->left = new node(2);
+    root->right = new node(3);
+    cout << "sum of the all nodes " << minofAllNodes(root) << endl;
+    return 0;
+}
