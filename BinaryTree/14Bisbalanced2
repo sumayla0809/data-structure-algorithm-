@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+class node
+{
+public:
+    int data;
+    node *left;
+    node *right;
+    node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+pair<bool, int> isbalanced(node *root)
+{
+    if (root == NULL)
+    {
+        return {true, 0};
+    }
+    pair<bool, int> left = isbalanced(root->left);
+    pair<bool, int> right = isbalanced(root->right);
+    int leftAns = left.first;
+    int rightAns = right.first;
+    int diff = abs(left.second - right.second) <= 1;
+    pair<bool, int> ans;
+    ans.second = max(left.second, right.second) + 1;
+    if (leftAns && rightAns && diff)
+    {
+        ans.first = true;
+    }
+    else
+    {
+        ans.first = false;
+    }
+    return ans;
+}
+int main()
+{
+    node *root = new node(1);
+    root->left = new node(2);
+    root->right = new node(3);
+    root->left->left = new node(4);
+    root->left->right = new node(5);
+    pair<bool, int> result = isbalanced(root);
+    if (result.first)
+    {
+        cout << "tree is balanced " << endl;
+    }
+    else
+    {
+        cout << "tree is balanced " << endl;
+    }
+    return 0;
+}
