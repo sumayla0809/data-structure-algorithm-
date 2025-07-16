@@ -1,0 +1,31 @@
+class Solution {
+  public:
+  void solve(Node *root, int k , int &count ,vector<int>path){
+      if(root == NULL)
+      return;
+            // current node ko path mein add karo
+      path.push_back(root->data);
+      
+            // left subtree explore karo
+      solve(root->left , k , count , path);
+            // right subtree explore karo
+      solve(root->right , k , count , path);
+            // yahan se backtrack karte hue check karo
+
+int sum = 0;
+for ( int i = path.size()-1; i>=0; i--){
+    sum += path[i];
+          if (sum == k) {
+              count++;
+          }
+}
+}
+  
+    int sumK(Node *root, int k) {
+        // code here
+        vector<int>path;
+        int count = 0;
+        solve(root , k,  count , path);
+        return count;
+    }
+};
