@@ -1,0 +1,45 @@
+class Solution {
+  public:
+  void creatMapping (int in[] , map<int , int >&nodetoIndex, int n){
+      for ( int i = 0 ; i < n ; i++){
+        nodetoIndex[in[i]] = i;
+      }
+  }
+  Node* solve(int in[] , int pre[] , int& index , int inorderStart ,int inorderEnd , int n  , map<int , int >&nodetoIndex)
+{
+    // base case 
+    if(index >= n){
+        return NULL;
+    }
+    if(inorderStart > inorderEnd){
+        return NULL;
+    }
+    int element = pre[index++] ;
+    Node* root = new Node(element);
+    int position = nodetoIndex[element];
+     
+    // recursiv calls 
+    root->left = solve(in , pre , index , inorderStart , position-1 , n , nodetoIndex);
+     root->right = solve(in , pre , index ,  position+1 , inorderEnd , n , nodetoIndex);
+return root;
+}
+    Node *buildTree(vector<int> &inorder, vector<int> &preorder) {
+        // code here
+ int n = inorder.size();
+
+        map<int ,int >nodetoIndex;
+        // creat nodes to index mapping 
+         int* in = new int[n];
+        int* pre = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            in[i] = inorder[i];
+            pre[i] = preorder[i];
+        }
+        int preOrderIndex = 0;
+        creatMapping(in , nodetoIndex , n);
+
+    Node* ans =    solve(in , pre ,preOrderIndex , 0 , n-1 , n  , nodetoIndex);
+        return ans;+ 
+    }
+};
