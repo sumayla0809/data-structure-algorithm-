@@ -1,0 +1,143 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int data)
+    {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+Node *insertIntoBST(Node *root, int data)
+{
+    if (root == NULL)
+    {
+        return new Node(data);
+    }
+
+    if (data < root->data)
+    {
+        root->left = insertIntoBST(root->left, data);
+    }
+    else
+    {
+        root->right = insertIntoBST(root->right, data);
+    }
+
+    return root;
+}
+
+// Function to take input until -1 is entered
+Node *takeInput()
+{
+    Node *root = NULL;
+    int data;
+    cout << "Enter data (-1 to stop): ";
+    cin >> data;
+    while (data != -1)
+    {
+        root = insertIntoBST(root, data);
+        cin >> data;
+    }
+    return root;
+}
+Node *minval(Node *root)
+{
+    Node *temp = root;
+    while (temp->left != NULL)
+    {
+        temp = temp->left;
+    }
+    return temp;
+}
+Node *maxval(Node *root)
+{
+    Node *temp = root;
+    while (temp->right != NULL)
+    {
+        temp = temp->right;
+    }
+    return temp;
+}
+Node *deleteFromBST(Node *root, int val)
+{
+    if (root == NULL)
+    {
+        return root;
+    }
+    if (root->data == val)
+    {
+        // 0 child
+        if (root->left == NULL && root->right == NULL)
+        {
+            delete root;
+            return NULL;
+        }
+        // 1child
+        // left child
+        if (root->left != NULL && root->right == NULL)
+        {
+            Node *temp = root->left;
+            delete root;
+            return temp;
+        }
+        // right child
+        if (root->left == NULL && root->right != NULL)
+        {
+            Node *temp = root->right;
+            delete root;
+            return temp;
+        }
+        // 2 child
+        if (root->left != NULL && root->right != NULL)
+        {
+            Node *min = minval(root->right);
+            root->data = min->data;
+            root->right = deleteFromBST(root->right, min->data);
+        }
+    }
+    else if (root->data > val)
+    {
+        // left part me jayo
+        root->left = deleteFromBST(root->left, val);
+        return root;
+    }
+    else
+    {
+        // right part m jayo
+        root->right = deleteFromBST(root->right, val);
+        return root;
+    }
+}
+int main()
+{
+    // Step 1: Take input to create the BST
+    Node *root = takeInput();
+
+    // Step 2: Find and print minimum and maximum values in the BST
+    Node *minNode = minval(root);
+    Node *maxNode = maxval(root);
+
+    cout << "Minimum value in BST: " << minNode->data << endl;
+    cout << "Maximum value in BST: " << maxNode->data << endl;
+
+    // Step 3: Ask the user for the value to delete from BST
+    int val;
+    cout << "Enter value to delete from BST: ";
+    cin >> val;
+
+    // Step 4: Delete that value
+    root = deleteFromBST(root, val);
+
+    // Optional: Print confirmation
+    cout << val << " has been deleted from the BST." << endl;
+
+    return 0;
+}
