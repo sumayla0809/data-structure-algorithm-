@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int data)
+    {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+Node *insertIntoBST(Node *root, int data)
+{
+    if (root == NULL)
+    {
+        return new Node(data);
+    }
+
+    if (data < root->data)
+    {
+        root->left = insertIntoBST(root->left, data);
+    }
+    else
+    {
+        root->right = insertIntoBST(root->right, data);
+    }
+
+    return root;
+}
+
+// Function to take input until -1 is entered
+Node *takeInput()
+{
+    Node *root = NULL;
+    int data;
+    cout << "Enter data (-1 to stop): ";
+    cin >> data;
+    while (data != -1)
+    {
+        root = insertIntoBST(root, data);
+        cin >> data;
+    }
+    return root;
+}
+
+// Function to search in BST
+bool searchInBST(Node *root, int x)
+{
+    if (root == NULL)
+        return false;
+    if (root->data == x)
+        return true;
+    if (x < root->data)
+        return searchInBST(root->left, x);
+    else
+        return searchInBST(root->right, x);
+}
+
+// Main function
+int main()
+{
+    Node *root = takeInput();
+
+    int key;
+    cout << "Enter value to search: ";
+    cin >> key;
+
+    if (searchInBST(root, key))
+    {
+        cout << "Found!" << endl;
+    }
+    else
+    {
+        cout << "Not Found!" << endl;
+    }
+
+    return 0;
+}
