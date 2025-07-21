@@ -1,0 +1,28 @@
+void inorder(TreeNode<int>* root , vector<int>&ino)  {
+    if(root == NULL){
+        return ;
+    }
+    inorder(root->left ,ino );
+    ino.push_back(root);
+   inorder(root->right ,ino );
+
+} 
+
+void inordertoBST(int s , int e , vector<int>&in){
+    // base casse 
+if(s> e){
+    return NULL;
+}
+int mid = (s+e)/2;
+TreeNode<int>*root = new TreeNode(in[mid]);
+root ->left = inordertoBST(s , mid-1 , in);
+root ->right = inordertoBST( mid+1 , e in);
+return root;
+}
+
+TreeNode<int>* balancedBst(TreeNode<int>* root) {
+vector<int>inorderVal; 
+inorder(root , ino);
+return inordertoBST(0 , inordertoBST.size()-1 ,inorderVal);
+
+}
