@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+void printTail(int n)
+{
+    if (n == 0)
+    {
+        return;
+    }
+    cout << n << " ";
+    printTail(n - 1);
+}
+void printHead(int n)
+{
+    if (n == 0)
+    {
+        return;
+    }
+    cout << n << " ";
+    printHead(n - 1);
+}
+
+int main()
+{
+    int n;
+    cout << " enter the number" << endl;
+    cin >> n;
+    cout << " print the tail order number ";
+    printTail(n);
+    cout << " print the head order number ";
+
+    printHead(n);
+    return 0;
+}
