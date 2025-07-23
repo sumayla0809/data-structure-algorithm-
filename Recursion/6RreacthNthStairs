@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+int reachNthStairs(long long nStairs)
+{
+    if (nStairs < 0)
+    {
+        return 0;
+    }
+    if (nStairs == 0)
+    {
+        return 1;
+    }
+    return reachNthStairs(nStairs - 1) + reachNthStairs(nStairs - 2);
+}
+int main()
+{
+    int nStairs;
+    cout << "Enter number of stairs: ";
+    cin >> nStairs;
+
+    cout << "Ways to reach " << nStairs << "th stair: " << reachNthStairs(nStairs) << endl;
+    return 0;
+}
