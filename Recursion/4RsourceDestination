@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+void reachHome(int sorc, int desti)
+{
+    cout << " sorc" << sorc << " desti" << desti << endl;
+    if (sorc == desti)
+    {
+        cout << "poch gya " << endl;
+        return;
+    }
+    sorc++;
+
+    reachHome(sorc, desti);
+}
+int main()
+{
+    int desti = 10;
+    int sorc = 1;
+    cout << endl;
+    reachHome(sorc, desti);
+
+    return 0;
+}
