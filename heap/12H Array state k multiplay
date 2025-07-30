@@ -1,0 +1,27 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<climits>
+using namespace std;
+
+vector<int> getFinalState(vector<int> &nums, int k, int multiplier)
+{
+    while (k--)
+    {
+        int minval = INT_MAX;
+        int minIndex = -1;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (nums[i] < minval)
+            {
+                minval = nums[i];
+                minIndex = i;
+            }
+        }
+        nums[minIndex] = minval * multiplier;
+    }
+    return nums;
+}
+int main (){
+    return 0;
+}
