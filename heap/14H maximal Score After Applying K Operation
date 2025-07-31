@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution
+{
+public:
+    long long maxKelements(vector<int> &nums, int k)
+    {
+        priority_queue<int> pq;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            pq.push(nums[i]);
+        }
+        long long score = 0;
+        while (k--)
+        {
+            int largest = pq.top();
+            pq.pop();
+            int newval = ceil(largest / 3.0);
+            pq.push(newval);
+            score += largest;
+        }
+        return score;
+    }
+};
