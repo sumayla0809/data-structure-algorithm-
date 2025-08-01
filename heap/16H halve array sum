@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Solution
+{
+public:
+    int halveArray(vector<int> &nums)
+    {
+        priority_queue<double> pq;
+        double totalsum = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            pq.push((double)nums[i]);
+            totalsum += nums[i];
+        }
+        double reducesum = 0;
+        int operation = 0;
+        while (reducesum < totalsum / 2.0)
+        {
+            double a = pq.top();
+            pq.pop();
+            double half = a / 2.0;
+            reducesum += half;
+
+            pq.push(half);
+            operation++;
+        }
+        return operation;
+    }
+};
