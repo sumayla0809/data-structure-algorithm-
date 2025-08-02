@@ -1,0 +1,58 @@
+#include <iostream>
+#include <map>
+#include <unordered_map>
+using namespace std;
+
+int main()
+{
+    //  1. Creation of unordered_map
+    unordered_map<string, int> m;
+
+    //  2. Insertion in unordered_map
+    // Method 1: Using make_pair
+    pair<string, int> p = make_pair("sumayla", 3);
+    m.insert(p);
+
+    // Method 2: Using constructor-style pair
+    pair<string, int> pair2("islam", 2);
+    m.insert(pair2); 
+
+    // Method 3: Using array-like indexing
+    m["mera"] = 1;
+
+    //  3. Updation (value of "mera" will be updated to 2)
+    m["mera"] = 2;
+
+    //  4. Accessing values (search)
+    cout << "m[\"mera\"] = " << m["mera"] << endl;             // Output: 2
+    cout << "m.at(\"sumayla\") = " << m.at("sumayla") << endl; // Output: 3
+
+    //  5. Size of map
+    cout << "Size: " << m.size() << endl; // Output: 3
+
+    //  6. Checking if key exists using count()
+    cout << "Is 'bro' present? " << m.count("bro") << endl;     // Output: 0 (false)
+    cout << "Is 'islam' present? " << m.count("islam") << endl; // Output: 1 (true)
+
+    //  7. Deletion of key
+    m.erase("islam");
+    cout << "Size after erase: " << m.size() << endl; // Output: 2; 
+  
+    //  8. Traversing using range-based loop
+    cout << "\nTraversing with range-based loop:" << endl;
+    for (auto i : m)
+    {
+        cout << i.first << " " << i.second << endl;
+    }
+
+    //  9. Traversing using iterator
+    cout << "\nTraversing with iterator:" << endl;
+    unordered_map<string, int>::iterator it = m.begin();
+    while (it != m.end())
+    {
+        cout << it->first << " " << it->second << endl;
+        it++;
+    }
+
+    return 0;
+}
