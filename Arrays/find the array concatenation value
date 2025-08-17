@@ -1,0 +1,21 @@
+class Solution {
+public:
+    long long findTheArrayConcVal(vector<int>& nums) {
+        int left = 0 ;
+        int right = nums.size()-1;
+        long long concatenation = 0;
+        while(left < right){
+             string s1 = to_string(nums[left]);
+            string s2 = to_string(nums[right]);
+            long long value = stoll(s1 + s2); // string concat then convert to number
+            
+            concatenation += value;
+            left++;
+            right--;
+        }
+        if(left == right){
+            concatenation += nums[left];
+        }
+        return concatenation;
+    }
+};
