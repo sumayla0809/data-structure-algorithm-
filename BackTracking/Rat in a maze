@@ -1,0 +1,98 @@
+#include <bits/stdc++.h>
+bool issafe(int newx , int newy , vector<vector<bool>>&vis ,
+ vector < vector < int >> & arr , int n ){
+     if (( newx >= 0 && newx < n )&& (newy >= 0 && newy < n)&& 
+     vis[newx][newy] != 1 && arr[newx][newy] == 1){
+         return true;
+     }
+     else {
+         return false;
+     }
+ }
+
+
+void solve (int x , int y , vector < vector < int >> & arr,int n ,
+ vector<string>&ans , vector<vector<bool>>&vis , string path ){
+// base case 
+if(x == n-1 && y == n-1){
+    ans.push_back(path);
+    return ;
+}
+// 4 movement D , L , R , U
+// D
+if(issafe(x+1 , y , vis , arr , n)){
+vis[x][y] = 1;
+solve(x+1 , y , arr , n , ans , vis , path +'D');
+vis[x][y] = 0;
+
+}
+
+// L
+if(issafe(x , y-1 , vis , arr , n)){
+vis[x][y] = 1;
+solve(x , y-1 , arr , n , ans , vis , path +'L');
+vis[x][y] = 0;
+
+}
+// R
+if(issafe(x , y+1 , vis , arr , n)){
+vis[x][y] = 1;
+solve(x , y+1 , arr , n , ans , vis , path +'R');
+vis[x][y] = 0;
+
+}
+
+// D
+if(issafe(x-1 , y , vis , arr , n)){
+vis[x][y] = 1;
+solve(x-1 , y , arr , n , ans , vis , path +'U');
+vis[x][y] = 0;
+
+}
+}
+vector < string > searchMaze(vector < vector < int >> & arr, int n) {
+    // Write your code here.
+    vector<string>ans;
+    vector<vector<bool>>visited(n , vector<bool>(n , 0));
+    string path = "";
+    if(arr[0][0] == 0){
+        return ans ;
+    }
+    solve(0 , 0 , arr , n , ans  , visited , path);
+    return ans;
+} 
+
+CODE EXPLAINANTION 
+1. isSafe  function check karta hai ki rat (newx, newy) wale cell me move kar sakta hai ya nahi.
+newx maze ke andar hai.
+newy bhi maze ke andar hai.
+Wo cell pehle visit nahi hua (vis[newx][newy] != 1).
+Maze cell open hai (arr[newx][newy] == 1).
+Agar sab true hai → return true. Otherwise → false.
+
+2.   solve function  Ye recursive function hai jo saare possible paths nikalta hai.
+(x, y) → current position.
+arr → maze grid.
+ans → list of all paths.
+vis → visited array.
+path → ab tak ka bana hua path string.
+
+3. base case -> Agar rat destination (n-1,n-1) tak pahunch gaya → path ko ans me daal do aur return kar do.
+
+4.Moves (Down, Left, Right, Up)
+ Order = Down → Left → Right → Up
+
+Check karo down move safe hai ya nahi.
+Current cell ko visited mark karo.
+Down move karo (x+1,y) aur path me 'D' add karo.
+Backtrack: visited mark ko wapas 0 kar do.
+Left move (x,y-1) → 'L' add hota hai.
+Right move (x,y+1) → 'R' add hota hai.
+Up move (x-1,y) → 'U' add hota hai.
+
+5.  searchMaze functionans → saare paths store karega.
+visited → sab cells initially false (not visited).
+path = "" → initially empty string.
+Agar start cell (0,0) blocked hai → directly empty return karo.
+Otherwise recursion start karo (0,0) se.
+Finally, saare possible paths return ho jaayenge.
