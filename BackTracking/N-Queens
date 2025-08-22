@@ -1,0 +1,89 @@
+class Solution {
+public:
+    void addSolution(vector<vector<string>>& ans, vector<vector<int>>& board, int n) {
+        vector<string> temp;
+        for (int i = 0; i < n; i++) {
+            string row = "";
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 1) row += "Q";
+                else row += ".";
+            }
+            temp.push_back(row);
+        }
+        ans.push_back(temp);
+    }
+
+    bool issafe(int row, int col, vector<vector<int>>& board, int n) {
+        int x = row, y = col;
+        // check left row
+        while (y >= 0) {
+            if (board[x][y] == 1) return false;
+            y--;
+        }
+        // check upper diagonal
+        x = row, y = col;
+        while (x >= 0 && y >= 0) {
+            if (board[x][y] == 1) return false;
+            x--; y--;
+        }
+        // check lower diagonal
+        x = row, y = col;
+        while (x < n && y >= 0) {
+            if (board[x][y] == 1) return false;
+            x++; y--;
+        }
+        return true;
+    }
+
+    void solve(int col, vector<vector<string>>& ans, vector<vector<int>>& board, int n) {
+        if (col == n) {
+            addSolution(ans, board, n);
+            return;
+        }
+        for (int row = 0; row < n; row++) {
+            if (issafe(row, col, board, n)) {
+                board[row][col] = 1;
+                solve(col + 1, ans, board, n);
+                board[row][col] = 0; // backtrack
+            }
+        }
+    }
+
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<int>> board(n, vector<int>(n, 0));
+        vector<vector<string>> ans;
+        solve(0, ans, board, n);
+        return ans;
+    }
+};
+CODE EXPLAINANTION
+1. addSolution function  This function converts the board (which is integers 0 and 1) into a string format like:
+.Q..
+...Q
+Q...
+..Q.
+Make an empty temp vector of strings.
+Loop through each row of board.
+If board[i][j] == 1 → place "Q". Else place ".".
+Push the created string row into temp.
+At the end, push temp into ans (which stores all solutions).
+
+2. issafe function  This function checks if placing a queen at (row, col) is safe or not.
+(a) Check same row (left side) Left side check (same row).
+Agar pehle se koi queen hai → unsafe.
+(b) Check upper-left diagonal Check karo (row-1, col-1), (row-2, col-2) … top-left diagonal.
+(c) Check lower-left diagonal Check karo (row+1, col-1), (row+2, col-2) … bottom-left diagonal.
+If koi queen milti hai → return false.
+Otherwise → safe, return true.
+
+3. solve function Recursive function to place queens column by column.
+If all queens placed (col == n) → save current board in ans.
+Try placing queen at every row of current column.
+If safe, put queen → move to next column.
+After recursion, remove queen (backtracking).
+
+4. Main function
+board = n x n filled with 0.
+ans = empty vector to store solutions.
+Start recursion from col=0.
+Return all solutions.
