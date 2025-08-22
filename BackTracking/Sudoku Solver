@@ -1,0 +1,54 @@
+class Solution {
+public:
+bool isSafe(int row , int col ,vector<vector<char>>& sudoku, int val ){
+    for(int i = 0 ; i < sudoku.size(); i++){
+        // row check 
+        if(sudoku[row][i] == (val + '0')){
+            return false;
+        }
+        // col check 
+        if(sudoku[i][col] == (val +'0')){
+            return false;
+        }
+        // 3*3 matrix check  
+        if(sudoku[3*(row/3)+i/3][3*(col/3)+ i % 3] == (val +'0')){
+            return false;
+        }
+    }
+    return true;
+}
+bool solve(vector<vector<char>>& sudoku){
+    int n = sudoku[0].size();
+    for(int row = 0 ; row < n ; row++){
+        for(int col = 0 ; col < n ; col++){
+            // check cell empty 
+            if(sudoku[row][col] == '.'){
+                for(int val = 1 ; val <= 9 ; val++){
+                    if(isSafe(row , col ,  sudoku, val)){
+                        sudoku[row][col] = val +'0';
+                        int aggeSolutionPosible = solve(sudoku);
+                        if(aggeSolutionPosible) return true;
+                        else{
+                            // backtrack 
+                            sudoku[row][col] = '.';
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+    }
+    return true;
+}
+    void solveSudoku(vector<vector<char>>& board) {
+        solve(board);
+    }
+CODE EXPLAINATION 
+Sabse pehle hum check karte hain ki current cell me value rakhna safe hai ya nahi.
+Row check: kya same row me already woh number hai? Agar hai → unsafe.
+Column check: kya same column me woh number hai? Agar hai → unsafe.
+3x3 subgrid check: kya chhoti wali box me woh number hai? Agar hai → unsafe.
+Agar safe hai → to hum number place kar dete hain aur aage recursion se solve karne ki koshish karte hain.
+Agar kahin par conflict aata hai → to hum backtrack karte hain, yani number hata dete hain aur next option try karte hain.
+Jab saari cells fill ho jati hain aur koi rule break nahi hota → sudoku solved ✅.
+};
