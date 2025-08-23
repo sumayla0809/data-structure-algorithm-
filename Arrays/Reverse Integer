@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int reverse(int x) {
+        string s = to_string(x);
+                bool isNegative = false;
+        if(s[0] == '-') {
+            isNegative = true;
+            s = s.substr(1); // remove '-' for now
+        }
+
+            int left = 0 ; 
+            int right = s.size()-1;
+            while(left < right){
+                swap(s[left] , s[right]);
+                left++;
+                right--;
+            }
+                long long ans = stoll(s);
+        if(isNegative) ans = -ans;
+
+        // Check 32-bit signed integer range
+        if(ans < INT_MIN || ans > INT_MAX) return 0;
+
+        return (int)ans;
+
+    }
+};
