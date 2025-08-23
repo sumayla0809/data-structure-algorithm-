@@ -1,0 +1,17 @@
+class Solution {
+public:
+int reverse(int num){
+    long long result = 0;
+    while(num != 0){
+        int digit = num % 10;
+        result = result * 10 + digit;
+        num = num /10;
+    }
+    return (int)result;
+}
+    bool isSameAfterReversals(int num) {
+       int rev1 =  reverse(num);
+       int rev2 = reverse(rev1) ;
+      return (rev2 == num);
+    }
+};
