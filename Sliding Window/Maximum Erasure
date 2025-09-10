@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        unordered_set<int>st;
+       int right =0;
+       int left = 0;
+       int maxsum =0;
+       int currsum =0;
+       int n = nums.size();
+       while(right < n) {
+        if(st.find(nums[right]) == st.end()){
+currsum += nums[right];
+st.insert(nums[right]);
+maxsum = max(maxsum , currsum);
+right++;
+        }
+        else{
+            currsum -= nums[left];
+st.erase( nums[left]);
+left++;
+        }
+       }
+       return maxsum;
+    }
+};
