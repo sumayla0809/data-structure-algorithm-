@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int countGoodSubstrings(string s) {
+    unordered_map<char , int>freq;
+    int left = 0 , right = 0;
+    int count = 0;
+    int n = s.size();
+
+    while(right < n) {
+        freq[s[right]]++;
+
+        if(right - left +1 == 3){
+    if(freq.size() == 3){
+    count ++;
+     }
+     freq[s[left]]--;
+    if(freq[s[left]] == 0){
+    freq.erase(s[left]);
+}
+left++;
+        }
+        right++;
+    }
+
+    
+return count;
+    }
+};
