@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string reverseOnlyLetters(string s) {
+        vector<char>ans;
+        for(int i = 0 ; i < s.length();i++){
+           char ch = s[i];
+            if((ch >= 'a' && ch <= 'z' )|| (ch >= 'A' && ch <= 'Z')){
+ans.push_back(ch);
+            }
+        }
+        reverse(ans.begin() , ans.end());
+        int k = 0;
+        for(int i = 0 ; i < s.length(); i++ ){
+            char ch = s[i];
+             if((ch >= 'a' && ch <= 'z') ||(ch >= 'A' && ch <= 'Z')){
+            s[i] = ans[k];
+            k++;
+             }
+
+        }
+return s;
+    }
+};
