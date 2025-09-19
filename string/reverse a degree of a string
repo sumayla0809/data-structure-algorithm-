@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int reverseDegree(string s) {
+        int sum  = 0;
+      for(int i = 0 ; i < s.length() ; i++)  {
+      char  ch = s[i];
+      int reverspos = 26 - (ch - 'a');
+      int index = i+1;
+    
+       sum += reverspos * index;
+      }
+      return sum ;
+
+    }
+};
