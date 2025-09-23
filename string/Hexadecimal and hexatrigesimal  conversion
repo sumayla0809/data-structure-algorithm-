@@ -1,0 +1,26 @@
+class Solution {
+public:
+string desimaltobase(long long   num , int base){
+    string ch = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    string ans = "";
+    while(num > 0){
+        int remainder = num % base;
+        ans.push_back(ch[remainder]);
+      num /=  base;
+    }
+        reverse(ans.begin() , ans.end());
+                return ans.empty() ? "0" : ans;
+
+}
+string Square(int n){
+    long long int sq = 1LL * n * n ;
+    return desimaltobase(sq , 16);
+}
+string cube(int n){
+    long long int cb = 1LL * n * n *  n ;
+    return desimaltobase(cb , 36);
+}
+    string concatHex36(int n) {
+        return Square(n) + cube(n);
+    }
+};
