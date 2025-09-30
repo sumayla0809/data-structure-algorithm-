@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string clearDigits(string s) {
+        stack<char> st;
+        for (char ch : s) {
+            if ((ch >= '0' && ch <= '9')) {
+                if (!st.empty() && !(st.top() >= '0' && st.top() <= '9'))
+                    st.pop();
+            }
+
+            else {
+                st.push(ch);
+            }
+        }
+        string res = "";
+        while(!st.empty()){
+            res = st.top() + res;   // reverse order
+            st.pop();
+        }
+        return res;
+    }
+};
