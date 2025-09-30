@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string reversePrefix(string word, char ch) {
+        stack<char> st;
+        string res = "";
+        int i = 0;
+for(; i < word.length();i++){
+    st.push(word[i]);
+            if (word[i] == ch) {
+                break;
+        }
+    }
+    if(i == word.length()) return word;
+
+    while (!st.empty() ){
+        res += st.top();
+        st.pop();
+    }
+    // apened remaing element 
+    for (int j = i + 1 ; j < word.length();j++){
+        res += word[j];
+    }
+    return res;
+    }
+};
