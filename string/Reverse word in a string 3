@@ -1,0 +1,18 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        stringstream ss(s);
+        string token ;
+        string result = "";
+        while(getline(ss , token , ' ')){
+    
+            reverse(token.begin() , token.end());
+            result += token + " ";
+            
+        }
+        if(!result.empty()){ // last bale space ko htane ke liye 
+            result.pop_back();
+        }
+        return result;
+    }
+};
