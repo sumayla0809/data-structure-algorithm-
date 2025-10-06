@@ -1,0 +1,18 @@
+
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        stringstream ss(s);   // string ko stream banaya
+        string word;          // ek ek word aayega
+        string lastWord;    
+
+        while (getline(ss, word, ' ')) { // space delimiter
+            if (!word.empty()) {        // agar word empty nahi hai
+                lastWord = word;        // lastWord update karte jao
+            }
+        }
+
+        return lastWord.length();       // last word ki length
+    }
+};
