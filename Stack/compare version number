@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<string> findToken(string& v) {
+        vector<string> ans;
+        stringstream ss(v);
+        string token;
+        while (getline(ss, token, '.')) {
+            ans.push_back(token);
+        }
+        return ans;
+    }
+    int compareVersion(string version1, string version2) {
+        vector<string> v1 = findToken(version1);
+        vector<string> v2 = findToken(version2);
+
+        int n1 = v1.size();
+        int n2 = v2.size();
+
+        int n = max(n1, n2);
+
+        for (int i = 0; i < n; i++) {
+            int a = (i < n1) ? stoi(v1[i]) : 0;
+            int b = (i < n2) ? stoi(v2[i]) : 0;
+
+            if (a < b)
+                return -1;
+            if (a > b)
+                return 1;
+        }
+        return 0;
+    }
+};
