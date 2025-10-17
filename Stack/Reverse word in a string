@@ -1,0 +1,24 @@
+class Solution {
+public:
+vector<string>findToken(string s){
+    vector<string>ans;
+    stringstream ss(s);
+    string token ;
+    while(getline(ss , token , ' ')){
+        if (!token.empty()) {   
+        ans.push_back(token);
+    }
+    }
+    return ans;
+}
+    string reverseWords(string s) {
+        vector<string>result = findToken(s);
+        reverse(result.begin() , result.end());
+        string ans = "";
+        for (int i = 0; i < result.size(); i++) {
+            ans += result[i];
+            if (i != result.size() - 1) ans += " ";
+        }
+        return ans;
+    }
+};
