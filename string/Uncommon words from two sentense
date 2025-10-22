@@ -1,0 +1,31 @@
+class Solution {
+public:
+vector<string>findToken(string s){
+    vector<string>ans;
+    string token ;
+    stringstream ss(s);
+    while(getline(ss , token , ' ')){
+
+        ans.push_back(token);
+    }
+    return ans;
+}
+    vector<string> uncommonFromSentences(string s1, string s2) {
+     unordered_map<string ,int >freq;
+     vector<string> a =  findToken(s1);
+     vector<string> b =  findToken(s2);
+     for(string word : a){
+        freq[word]++;
+     }
+       for(string word : b){
+        freq[word]++;
+     }
+     vector<string >result;
+    for(auto pair : freq ){
+        if(pair.second == 1){
+            result.push_back (pair.first);
+        }
+    }
+return result;
+}
+};
