@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int digitsquresum(int n) {
+        int sum = 0;
+        while (n > 0) {
+            int remainder = n % 10;
+            sum += remainder * remainder;
+            n = n / 10;
+        }
+        return sum;
+    }
+    bool isHappy(int n) {
+        unordered_set<int> seen;
+        while (n != 1 && !seen.count(n)) {
+            seen.insert(n);
+             n = digitsquresum(n);
+        }
+        return n == 1;
+    }
+};
