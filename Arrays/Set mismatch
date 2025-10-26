@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        int n  = nums.size();
+        unordered_map<int, int> freq;
+        vector<int> ans;
+        int sum_nums = 0;
+        for (int i = 0; i < n; i++) {
+            freq[nums[i]]++;
+            sum_nums += nums[i];
+        }
+
+        int dup = 0;
+        for (auto i : freq) {
+            if (i.second > 1) {
+                dup = i.first;
+                ans.push_back(dup);
+                break;
+            }
+        }
+        int sum_n = n* (n+1)/2;
+        int mising = sum_n - (sum_nums -dup);
+        ans.push_back(mising);
+        return ans;
+    }
+};
