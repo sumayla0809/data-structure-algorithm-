@@ -1,0 +1,13 @@
+class Solution {
+public:
+    vector<int> recoverOrder(vector<int>& order, vector<int>& friends) {
+        unordered_set<int>s(friends.begin() , friends.end());
+        vector<int>ans;
+         for(int i : order){
+            if(s.count(i)){
+                ans.push_back(i);
+            }
+         }
+         return ans;
+    }
+};
