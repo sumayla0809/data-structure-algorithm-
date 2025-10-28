@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int getLeastFrequentDigit(int n) {
+        unordered_map<int , int>freq;
+         while(n > 0){
+            int digit = n %10;
+            freq[digit]++;
+             n /= 10;
+         }
+         int minfreq = INT_MAX;
+         int ans = -1;
+         for(auto &i : freq ){
+            if(i.second < minfreq || (i.second == minfreq && i.first < ans) ){
+                minfreq = i.second;
+                ans = i.first;
+            }
+         }
+         return ans;
+    }
+};
