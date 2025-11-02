@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+        unordered_map<char, int> freq;
+        for (char ch : s)
+            freq[ch]++;
+
+        stack<char> st;
+        vector<bool> vis(250, false);
+        for (char ch : s) {
+            freq[ch]--;
+            if (vis[ch]) {
+                continue;
+            }
+            while (!st.empty() && ch < st.top() && freq[st.top()] > 0) {
+                vis[st.wtop()] = false;
+                st.pop();
+            }
+            st.push(ch);
+            vis[ch] = true;
+        }
+
+        string ans = "";
+        while (!st.empty()) {
+            ans = st.top() + ans;
+            st.pop();
+        }
+        return ans;
+    }
+};
