@@ -1,0 +1,20 @@
+class Solution {
+public:
+    long long removeZeros(long long n) {
+        int ans = -1;
+        while(n > 0){
+        int x = n % 10;
+        if ( x != 0)
+            ans = x;
+        n /= 10;
+        }
+        reverse(ans.begin() , ans.end());
+        long long num = 0;
+        for (int d : ans) {
+            num = num * 10 + d;
+        }
+
+        return num;
+        
+    }
+};
